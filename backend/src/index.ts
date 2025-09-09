@@ -3,6 +3,7 @@ import path from 'path'
 import fetch from 'node-fetch'
 import cors from 'cors'
 import router from './routes/upload'
+import { Server } from 'http'
 
 const app = express()
 app.use(express.json())
@@ -30,6 +31,56 @@ app.get('/proxy', async (req, res) => {
   }
 })
 
-app.use(express.static(path.join(__dirname, '../../frontend/dist')));
+app.use(express.static(path.join(__dirname, '../../frontend/dist')))
 
-app.listen(5000, () => console.log('Proxy server running on port 5000'))
+// The "catchall" handler: for any request that doesn't
+// match an API route, send back React's index.html file.
+/* app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../../frontend/dist', 'index.html'));
+}); */
+
+const server: Server = app.listen(5000, () => console.log('Proxy server running on port 5000'))
+
+
+
+// Handle any type of server closing and error issue
+
+process.on('SIGTERM', () => {
+  console.log('SIGTERM signal received... Server shutting down..')
+  if (server) {
+    server.close(() => {
+      process.exit(1)
+    })
+  }
+  process.exit(1)
+})
+
+process.on('SIGINT', () => {
+  console.log('SIGINT signal received... Server shutting down..')
+  if (server) {
+    server.close(() => {
+      process.exit(1)
+    })
+  }
+  process.exit(1)
+})
+
+process.on('unhandledRejection', () => {
+  console.log('Unhandled Rejection signal received... Server shutting down..')
+  if (server) {
+    server.close(() => {
+      process.exit(1)
+    })
+  }
+  process.exit(1)
+})
+
+process.on('uncaughtException', () => {
+  console.log('Uncaught Exception signal received... Server shutting down..')
+  if (server) {
+    server.close(() => {
+      process.exit(1)
+    })
+  }
+  process.exit(1)
+})

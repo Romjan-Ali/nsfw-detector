@@ -1,5 +1,5 @@
 {
-  "name": "backend",
+  "name": "nsfw-detector-frontend",
   "module": "src/index.ts",
   "type": "module",
   "private": true,
