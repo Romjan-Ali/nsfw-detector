@@ -1,6 +1,5 @@
 import express from 'express'
 import path from 'path'
-// import fetch from 'node-fetch'
 import cors from 'cors'
 import router from './routes/upload'
 import { Server } from 'http'
@@ -8,94 +7,79 @@ import { Server } from 'http'
 const app = express()
 app.use(express.json())
 
+// Fixed CORS configuration
 const corsOptions = {
   origin:
     process.env.NODE_ENV === 'development'
       ? [
-          'http://localhost:5000',
-          'http://localhost:5173',
-          'http://127.0.0.1:5000',
-          'http://127.0.0.1:5173'
+          'http://localhost:3000',   // React Create App default
+          'http://localhost:5173',   // Vite dev server
+          'http://localhost:4173',   // Vite preview
+          'http://127.0.0.1:3000',   // Alternative localhost
+          'http://127.0.0.1:5173',   // Alternative localhost
+          'http://127.0.0.1:4173'    // Alternative localhost
         ]
       : 'https://nsfw-detector-93nm.onrender.com',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }
 
 app.use(cors(corsOptions))
 
+// API routes
 app.use('/api', router)
 
-/* app.get('/proxy', async (req, res) => {
-  const { url } = req.query
-  if (!url || typeof url !== 'string') {
-    return res.status(400).json({ error: 'Missing URL' })
-  }
-
-  try {
-    const response = await fetch(url)
-    const buffer = await response.arrayBuffer()
-
-    res.setHeader(
-      'Content-Type',
-      response.headers.get('content-type') || 'image/jpeg'
-    )
-    res.setHeader('Access-Control-Allow-Origin', '*')
-    res.send(Buffer.from(buffer))
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch image' })
-  }
-}) */
-
+// Serve static files from React build
 app.use(express.static(path.join(__dirname, '../../frontend/dist')))
 
-// The "catchall" handler: for any request that doesn't
-// match an API route, send back React's index.html file.
-// Catch-all handler - more specific pattern
+// Catch-all handler for SPA routing
 app.get(/^(?!\/api).*/, (req, res) => {
-  res.sendFile(path.join(__dirname, '../../frontend/dist', 'index.html'));
-});
+  res.sendFile(path.join(__dirname, '../../frontend/dist', 'index.html'))
+})
 
-const server: Server = app.listen(5000, () =>
+const server: Server = app.listen(5000, () => {
   console.log('Server running on port 5000')
-)
-
-// Handle any type of server closing and error issue
-
-process.on('SIGTERM', () => {
-  console.log('SIGTERM signal received... Server shutting down..')
-  if (server) {
-    server.close(() => {
-      process.exit(1)
-    })
-  }
-  process.exit(1)
+  console.log('Environment:', process.env.NODE_ENV || 'production')
+  console.log('CORS origins:', corsOptions.origin)
 })
 
-process.on('SIGINT', () => {
-  console.log('SIGINT signal received... Server shutting down..')
+// Graceful shutdown handlers
+const gracefulShutdown = (signal: string) => {
+  console.log(`${signal} signal received... Server shutting down gracefully.`)
+  
   if (server) {
-    server.close(() => {
-      process.exit(1)
+    server.close((err) => {
+      if (err) {
+        console.error('Error during server close:', err)
+        process.exit(1)
+      }
+      console.log('Server closed successfully.')
+      process.exit(0) // Success exit code
     })
+    
+    // Force exit after 10 seconds
+    setTimeout(() => {
+      console.log('Force closing server...')
+      process.exit(1)
+    }, 10000)
+  } else {
+    process.exit(0)
   }
-  process.exit(1)
+}
+
+// Handle termination signals
+process.on('SIGTERM', () => gracefulShutdown('SIGTERM'))
+process.on('SIGINT', () => gracefulShutdown('SIGINT'))
+
+// Handle unhandled promise rejections
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason)
+  gracefulShutdown('unhandledRejection')
 })
 
-process.on('unhandledRejection', () => {
-  console.log('Unhandled Rejection signal received... Server shutting down..')
-  if (server) {
-    server.close(() => {
-      process.exit(1)
-    })
-  }
-  process.exit(1)
-})
-
-process.on('uncaughtException', () => {
-  console.log('Uncaught Exception signal received... Server shutting down..')
-  if (server) {
-    server.close(() => {
-      process.exit(1)
-    })
-  }
-  process.exit(1)
+// Handle uncaught exceptions
+process.on('uncaughtException', (error) => {
+  console.error('Uncaught Exception:', error)
+  gracefulShutdown('uncaughtException')
 })
