@@ -1,0 +1,26 @@
+{
+  "name": "nsfw-detector",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "bun backend/src/index.ts",
+    "build:frontend": "cd frontend && bun install && bun run build",
+    "start:all": "bun run build:frontend && bun start",
+    "dev": "concurrently \"bun backend/src/index.ts\" \"cd frontend && bun run start\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Romjan-Ali/nsfw-detector.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Romjan-Ali/nsfw-detector/issues"
+  },
+  "homepage": "https://github.com/Romjan-Ali/nsfw-detector#readme",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
