@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "start": "bun backend/src/index.ts",
-    "build:frontend": "cd frontend && bun install && bun run build",
-    "start:all": "bun run build:frontend && bun start",
-    "dev": "concurrently \"bun backend/src/index.ts\" \"cd frontend && bun run start\""
-  },
+"scripts": {
+  "start": "bun install && cd backend && bun install && bun src/index.ts",
+  "build:frontend": "cd frontend && bun install && bun run build",
+  "start:all": "bun run build:frontend && bun install && bun backend/src/index.ts",
+  "dev": "concurrently \"cd backend && bun src/index.ts\" \"cd frontend && bun run start\""
+},
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Romjan-Ali/nsfw-detector.git"
