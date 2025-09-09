@@ -9,7 +9,14 @@ const app = express()
 app.use(express.json())
 app.use(
   cors({
-    origin: process.env.NODE_ENV === 'development' ? ['http://localhost:5000', 'http://localhost:4173', 'http://127.0.0.1:5000'] : 'https://nsfw-detector-93nm.onrender.com',
+    origin:
+      process.env.NODE_ENV === 'development'
+        ? [
+            'http://localhost:5000',
+            'http://localhost:4173',
+            'http://127.0.0.1:5000',
+          ]
+        : 'https://nsfw-detector-93nm.onrender.com',
     credentials: true,
   })
 )
@@ -45,9 +52,9 @@ app.use(express.static(path.join(__dirname, '../../frontend/dist')))
   res.sendFile(path.join(__dirname, '../../frontend/dist', 'index.html'));
 }); */
 
-const server: Server = app.listen(5000, () => console.log('Server running on port 5000'))
-
-
+const server: Server = app.listen(5000, () =>
+  console.log('Server running on port 5000')
+)
 
 // Handle any type of server closing and error issue
 
