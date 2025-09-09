@@ -53,7 +53,8 @@ root/
 ## 🚀 Installation (Development)
 
 ### 1. Clone the repo
-```bash
+
+```sh
 git clone https://github.com/your-username/nsfw-detection.git
 cd nsfw-detection
 ```
@@ -62,17 +63,18 @@ cd nsfw-detection
 
 Backend
 
-```bash
+```sh
 cd backend
 bun install
 ```
 
 Frontend
 
-```bash
+```sh
 cd ../frontend
 bun install
 ```
+
 3. Run Development Servers
 
 From root folder:
@@ -88,19 +90,19 @@ bun run dev
 
 ### Build Command
 
-```bash
+```sh
 bun run build
 ```
 
 ### Start Command
 
-```bash
+```sh
 bun start
 ```
 
 - Serve frontend build through Render or via backend static hosting.
 
-⚡ Usage
+## ⚡ Usage
 
 1. Open the URL
 
