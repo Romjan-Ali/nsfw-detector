@@ -22,7 +22,7 @@ console.log('Computed baseURL:', baseURL)
 const api = axios.create({
   baseURL,
   withCredentials: true,
-  timeout: 10000, // 10 second timeout
+  // timeout: 10000, // 10 second timeout
 })
 
 // Request interceptor for debugging
