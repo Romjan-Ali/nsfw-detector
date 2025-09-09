@@ -18,7 +18,6 @@ const corsOptions = {
           'http://127.0.0.1:5173'
         ]
       : 'https://nsfw-detector-93nm.onrender.com',
-  credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }
