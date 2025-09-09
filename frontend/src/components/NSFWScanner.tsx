@@ -53,7 +53,7 @@ const NSFWScanner: React.FC = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto p-6 bg-white rounded-2xl shadow-lg">
+    <div className="max-w-xl mx-auto my-6 p-6 bg-white rounded-2xl shadow-lg">
       <h1 className="text-2xl font-bold text-center mb-6">🔍 NSFW Scanner</h1>
 
       {/* File Upload */}
