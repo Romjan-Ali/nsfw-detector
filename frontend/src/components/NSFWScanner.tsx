@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import api from "../api";
 
 interface Prediction {
   className: string;
@@ -20,7 +20,7 @@ const NSFWScanner: React.FC = () => {
     setLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:5000/api/upload", formData);
+      const res = await api.post("/upload", formData);
       setPredictions(res.data.predictions);
       setStatus(res.data.status);
     } catch (err) {
@@ -36,7 +36,7 @@ const NSFWScanner: React.FC = () => {
     setLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:5000/api/check-url", { imageUrl: url });
+      const res = await api.post("/check-url", { imageUrl: url });
       setPredictions(res.data.predictions);
       setStatus(res.data.status);
     } catch (err) {

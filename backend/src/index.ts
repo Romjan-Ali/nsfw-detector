@@ -12,10 +12,10 @@ const corsOptions = {
   origin:
     process.env.NODE_ENV === 'development'
       ? [
-          'http://localhost:3000',   // React Create App default
+          'http://localhost:5000',   // React Create App default
           'http://localhost:5173',   // Vite dev server
           'http://localhost:4173',   // Vite preview
-          'http://127.0.0.1:3000',   // Alternative localhost
+          'http://127.0.0.1:5000',   // Alternative localhost
           'http://127.0.0.1:5173',   // Alternative localhost
           'http://127.0.0.1:4173'    // Alternative localhost
         ]
