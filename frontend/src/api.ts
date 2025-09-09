@@ -29,7 +29,8 @@ const api = axios.create({
 api.interceptors.request.use(
   (config) => {
     console.log('=== API Request ===')
-    console.log('Full URL:', config.baseURL + config.url)
+    console.log('Base URL', config.baseURL || '')
+    console.log('URL', config.url || '')
     console.log('Method:', config.method)
     console.log('Headers:', config.headers)
     console.log('Data:', config.data)
