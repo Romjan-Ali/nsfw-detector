@@ -9,7 +9,7 @@ const app = express()
 app.use(express.json())
 app.use(
   cors({
-    origin: process.env.NODE_ENV === 'development' ? '*' : 'http://localhost:5000',
+    origin: process.env.NODE_ENV === 'development' ? '*' : 'https://nsfw-detector-93nm.onrender.com',
     credentials: true,
   })
 )
