@@ -5,7 +5,7 @@
   "main": "index.js",
 "scripts": {
   "start": "cd backend && bun start",
-  "build": "bun install && cd frontend && bun install && bun run build && .. && cd backend && bun install",
+  "build": "bun install && cd frontend && bun install && bun run build && cd .. && cd backend && bun install",
   "dev": "concurrently \"cd backend && bun src/index.ts\" \"cd frontend && bun run start\""
 },
 
