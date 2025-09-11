@@ -1,5 +1,4 @@
 import express from 'express'
-import path from 'path'
 import cors from 'cors'
 import router from './routes/upload'
 import { Server } from 'http'
@@ -19,7 +18,7 @@ const corsOptions = {
           'http://127.0.0.1:5173',   // Alternative localhost
           'http://127.0.0.1:4173'    // Alternative localhost
         ]
-      : 'https://nsfw-detector-93nm.onrender.com',
+      : 'https://photo-nsfw-scanner.vercel.app',
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
