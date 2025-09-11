@@ -14,7 +14,8 @@ console.log('Current Origin:', window.location.origin)
 const isDevelopment = import.meta.env.MODE === 'development' || import.meta.env.DEV
 const baseURL = isDevelopment 
   ? 'http://localhost:5000/api' 
-  : 'https://nsfw-detector-backend.vercel.app/'
+  : 'https://nsfw-detector-backend.onrender.com/api'
+  // : 'https://nsfw-detector-backend.vercel.app/api'
 
 console.log('Is Development:', isDevelopment)
 console.log('Computed baseURL:', baseURL)
